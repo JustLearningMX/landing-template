@@ -1,9 +1,11 @@
-import LandingPage from "./LandingPage.tsx";
+import LandingPage from "./pages/LandingPage.tsx";
 
 function App() {
 
   return (
-      <LandingPage />
+      <>
+          <LandingPage />
+      </>
   )
 }
 

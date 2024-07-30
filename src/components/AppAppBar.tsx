@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { PaletteMode } from '@mui/material';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -14,6 +13,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ToggleColorMode from './ToggleColorMode';
 
 import Sitemark from './SitemarkIcon.tsx';
+import {useState} from "react";
 
 interface AppAppBarProps {
   mode: PaletteMode;
@@ -21,7 +21,7 @@ interface AppAppBarProps {
 }
 
 export default function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
