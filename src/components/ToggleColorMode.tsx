@@ -3,7 +3,7 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import ModeNightRoundedIcon from '@mui/icons-material/ModeNightRounded';
-import {DARK_MODE} from "../shared/theme/GlobalThemeContext.tsx";
+import {DARK_MODE} from '../shared/theme/themeReducer.tsx';
 
 interface ToggleColorModeProps extends IconButtonProps {
   mode: PaletteMode;

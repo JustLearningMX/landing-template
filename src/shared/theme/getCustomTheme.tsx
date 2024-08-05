@@ -1,7 +1,7 @@
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import { createTheme, ThemeOptions, alpha } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
-import {DARK_MODE} from "./GlobalThemeContext.tsx";
+import {DARK_MODE} from './themeReducer.tsx';
 
 declare module '@mui/material/styles/createPalette' {
   interface ColorRange {

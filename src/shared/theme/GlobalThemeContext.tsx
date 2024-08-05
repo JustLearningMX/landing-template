@@ -1,45 +1,35 @@
-import {createContext, ReactNode, useCallback, useMemo, useState} from "react";
+import {createContext, ReactNode, useCallback, useMemo, useReducer} from "react";
 
-import { PaletteMode } from "@mui/material";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
-
-import getCustomTheme from "./getCustomTheme.tsx";
-import { ThemeContextProps } from "../interfaces";
+import {ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import ToggleCustomTheme from "./ToggleCustomTheme.tsx";
 
-export const LIGHT_MODE = 'light';
-export const DARK_MODE = 'dark';
+import { ThemeContextProps } from "../interfaces";
+import ToggleCustomTheme from "./ToggleCustomTheme.tsx";
+import {initialThemeState, themeReducer} from "./themeReducer.tsx";
 
 export const GlobalThemeContext = createContext<ThemeContextProps | null>(null);
 
 export const GlobalThemeContextProvider = ({ children }: { children: ReactNode }) => {
 
-    const [mode, setMode] = useState<PaletteMode>(LIGHT_MODE);
-    const [showCustomTheme, setShowCustomTheme] = useState(true);
-    const customTheme = useMemo(() => createTheme(getCustomTheme(mode)), [mode]);
-    const defaultTheme = useMemo(() => createTheme({ palette: { mode } }), [mode]);
+    const [state, dispatch] = useReducer(themeReducer, initialThemeState);
 
     const toggleColorMode = useCallback(() => {
-        setMode((prev) => (prev === DARK_MODE ? LIGHT_MODE : DARK_MODE));
+        dispatch({ type: 'TOGGLE_COLOR_MODE' });
     }, []);
 
     const toggleCustomTheme = useCallback(() => {
-        setShowCustomTheme((prev) => !prev);
+        dispatch({ type: 'TOGGLE_CUSTOM_THEME' });
     }, []);
 
     const contextValue = useMemo(() => ({
-        mode,
-        showCustomTheme,
-        customTheme,
-        defaultTheme,
+        ...state,
         toggleColorMode,
         toggleCustomTheme
-    }), [mode, showCustomTheme, customTheme, defaultTheme, toggleColorMode, toggleCustomTheme]);
+    }), [state, toggleColorMode, toggleCustomTheme]);
 
     return (
         <GlobalThemeContext.Provider value={ contextValue }>
-            <ThemeProvider theme={ showCustomTheme ? customTheme : defaultTheme}>
+            <ThemeProvider theme={ state.showCustomTheme ? state.customTheme : state.defaultTheme}>
                 <CssBaseline />
 
                 { children }
